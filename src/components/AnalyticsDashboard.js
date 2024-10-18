@@ -1,8 +1,11 @@
 "use client";
-
-import { BarChart } from "@mui/x-charts";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Logout from "./Logout/page.js";
+import BarChartComponent from "../app/components/BarChartComponent.js";
+import LineChartComponent from "../app/components/LineChartComponent.js";
+import Button from "./Button/page.jsx";
+import Loader from "./Loader/page.jsx";
 
 const AnalyticsDashboard = () => {
   const [data, setData] = useState([]);
@@ -14,6 +17,13 @@ const AnalyticsDashboard = () => {
     startDate: "",
     endDate: "",
   });
+
+  useEffect(() => {
+    const savedFilters = sessionStorage.getItem("filters");
+    if (savedFilters) {
+      setFilters(JSON.parse(savedFilters));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +41,12 @@ const AnalyticsDashboard = () => {
     fetchData();
   }, [filters]);
 
+  useEffect(() => {
+    sessionStorage.setItem("filters", JSON.stringify(filters));
+  }, [filters]);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
@@ -70,57 +84,78 @@ const AnalyticsDashboard = () => {
   };
 
   return (
-    <div style={{ height: "400px", width: "90%" }}>
-      <h1>Analytics Dashboard</h1>
+    <div className="flex justify-center items-center">
+      <div className="w-[95%]">
+        <div className="flex py-2 justify-between items-center">
+          <h1 className="font-bold">Analytics Dashboard</h1>
+          <Logout />
+        </div>
 
-      <div>
-        <label>
-          Gender:
-          <select name="gender" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </label>
+        <div className="flex flex-wrap gap-4 py-4">
+          <label className="flex flex-col text-sm font-medium">
+            Gender:
+            <select
+              name="gender"
+              onChange={handleFilterChange}
+              value={filters.gender}
+              className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="">All</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </label>
 
-        <label>
-          Age:
-          <select name="age" onChange={handleFilterChange}>
-            <option value="">All</option>
-            <option value="18-25">18-25</option>
-            <option value="26-35">26-35</option>
-            <option value="36-45">36-45</option>
-            <option value="46-55">46-55</option>
-            <option value="56+">56+</option>
-          </select>
-        </label>
+          <label className="flex flex-col text-sm font-medium">
+            Age:
+            <select
+              name="age"
+              onChange={handleFilterChange}
+              value={filters.age}
+              className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="">All</option>
+              <option value="18-25">18-25</option>
+              <option value="26-35">26-35</option>
+              <option value="36-45">36-45</option>
+              <option value="46-55">46-55</option>
+              <option value="56+">56+</option>
+            </select>
+          </label>
 
-        <label>
-          Date Range:
-          <input type="date" name="startDate" onChange={handleFilterChange} />
-          to
-          <input type="date" name="endDate" onChange={handleFilterChange} />
-        </label>
+          <label className="flex flex-col text-sm font-medium">
+            Start Date:
+            <input
+              type="date"
+              name="startDate"
+              value={filters.startDate}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </label>
+
+          <label className="flex flex-col text-sm font-medium">
+            End Date:
+            <input
+              type="date"
+              name="endDate"
+              value={filters.endDate}
+              onChange={handleFilterChange}
+              className="mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </label>
+          <Button filters={filters} />
+        </div>
+
+        {/* Adding gap and fixed height for the charts */}
+        <div style={{ marginTop: "20px", height: "400px" }}>
+          <BarChartComponent chartData={chartData} />
+        </div>
+
+        <div style={{ marginTop: "20px", height: "400px" }}>
+          <LineChartComponent chartData={chartData} />
+        </div>
       </div>
-      <BarChart
-        dataset={chartData}
-        yAxis={[
-          {
-            data: ["A", "B", "C", "D", "E", "F"],
-            dataKey: "category",
-            scaleType: "band",
-          },
-        ]}
-        xAxis={[
-          {
-            id: "barValues",
-            dataKey: "value",
-            scaleType: "linear",
-          },
-        ]}
-        series={[{ dataKey: "value", label: "Total" }]}
-        layout="horizontal"
-      />
     </div>
   );
 };

@@ -1,0 +1,57 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.copy-button {
+  background-color: #f2f7fa;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-top: 22px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.copy-button:hover {
+  background-color: #29313d;
+  color: #ffffff;
+}
+
+.copy-button:focus {
+  outline: none;
+  transform: scale(1.05);
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.button-text {
+  color: #0e418f;
+}
+
+.copied-text {
+  position: absolute;
+  color: #b5ccf3;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.copy-button:focus .copied-text {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.copy-button:focus .button-text {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
