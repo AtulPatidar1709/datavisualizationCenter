@@ -13,14 +13,9 @@ export async function GET(req) {
     const startDate = searchParams.get("startDate");
     const endDate = searchParams.get("endDate");
 
-    console.log("Incoming filters:", { gender, age, startDate, endDate });
-
-    // Fetch the CSV data from the Google Sheet
     const axiosResponse = await axios.get(GOOGLE_SHEET_URL);
 
     const data = parse(axiosResponse.data, { header: true }).data;
-
-    console.log(data);
 
     let filteredData = data;
 
@@ -28,7 +23,7 @@ export async function GET(req) {
       filteredData = filteredData.filter(
         (entry) => entry.Gender.toLowerCase() === gender.toLowerCase()
       );
-      console.log("After gender filter:", filteredData);
+      // console.log("After gender filter:", filteredData);
     }
 
     if (age) {
@@ -48,7 +43,7 @@ export async function GET(req) {
         }
         return false;
       });
-      console.log("After age filter:", filteredData);
+      // console.log("After age filter:", filteredData);
     }
 
     if (startDate) {
@@ -56,7 +51,7 @@ export async function GET(req) {
         const entryDate = new Date(entry.Day.split("/").reverse().join("-"));
         return entryDate >= new Date(startDate);
       });
-      console.log("After startDate filter:", filteredData);
+      // console.log("After startDate filter:", filteredData);
     }
 
     if (endDate) {
@@ -64,7 +59,7 @@ export async function GET(req) {
         const entryDate = new Date(entry.Day.split("/").reverse().join("-"));
         return entryDate <= new Date(endDate);
       });
-      console.log("After endDate filter:", filteredData);
+      // console.log("After endDate filter:", filteredData);
     }
 
     // Return the transformed data as JSON using NextResponse
