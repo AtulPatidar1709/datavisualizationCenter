@@ -41,7 +41,7 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         process.env.DOMAIN
       }/verifyemail?token=${token}">here</a> to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
-      } <br/> or <br/> Enter below code in your OTP Page.<br/> ${token}</p>
+      } <br/> or <br/> Enter below code in your OTP Page.<br/> <strong>${token}</strong></p>
 `,
     };
 
