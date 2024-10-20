@@ -1,25 +1,28 @@
-import { connectDB } from "@/dbconfig/dbconfig.js";
+import { connectDB } from "@/dbconfig/dbconfig";
 import { NextResponse } from "next/server";
 
-// Connect to the database
+// Connect to the database (if required for session management)
 connectDB();
 
 export async function GET(request) {
   try {
+    // Prepare the response
     const response = NextResponse.json({
       message: "Logout Successfully",
       success: true,
     });
 
-    // Clear the cookie by setting an expired date and path
+    // Clear the token cookie by setting it to expire
     response.cookies.set("token", "", {
       httpOnly: true,
-      expires: new Date(0),
-      path: "/", // Ensure the path is the same as where the token was initially set
+      secure: process.env.NODE_ENV === "production", // Ensure secure flag is used in production
+      expires: new Date(0), // Expire the cookie immediately
+      path: "/", // Ensure path matches where the cookie was set
     });
 
     return response;
   } catch (error) {
+    // Handle any errors
     return NextResponse.json(
       { error: error.message },
       { status: 500, headers: { "Content-Type": "application/json" } }

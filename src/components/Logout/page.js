@@ -11,7 +11,10 @@ const Logout = () => {
     try {
       await axios.get("/api/users/logout", { withCredentials: true });
       toast.success("Logout success");
+
+      // Navigate to login page and force a refresh
       router.push("/login");
+      router.refresh(); // Force page reload to clear client-side cache
     } catch (error) {
       toast.error("Something went wrong");
       console.error("Logout error:", error);
