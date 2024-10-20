@@ -148,12 +148,20 @@ const AnalyticsDashboard = () => {
         </div>
 
         {/* Adding gap and fixed height for the charts */}
-        <div style={{ marginTop: "20px", height: "400px" }}>
-          <BarChartComponent chartData={chartData} />
-        </div>
+        <div className="flex flex-col gap-4">
+          <div style={{ marginTop: "20px", height: "400px" }}>
+            <h3 className="text-sm mb-4 md:text-lg font-semibold">
+              People Visit Category Vise
+            </h3>
+            <BarChartComponent chartData={chartData} />
+          </div>
 
-        <div style={{ marginTop: "20px", height: "400px" }}>
-          <LineChartComponent chartData={chartData} />
+          <div className="mt-12 h-[400px]">
+            <h3 className="text-sm mb-4 md:text-lg font-semibold">
+              Category Trends
+            </h3>
+            <LineChartComponent chartData={chartData} />
+          </div>
         </div>
       </div>
     </div>
