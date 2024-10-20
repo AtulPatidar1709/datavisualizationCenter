@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 // Load local fonts
 const geistSans = localFont({
@@ -28,6 +29,8 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ fontFamily: "var(--font-geist-sans), sans-serif" }} // Fallback to sans-serif
       >
+        {" "}
+        <Toaster position="bottom-center" reverseOrder={false} />
         {children}
       </body>
     </html>

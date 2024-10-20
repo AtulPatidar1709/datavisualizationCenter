@@ -11,8 +11,8 @@ const Page = () => {
   const router = useRouter();
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: "Test123@gmail.com",
+    password: "Test123",
   });
 
   const [buttonDisable, setButtonDisable] = useState(false);
@@ -29,14 +29,12 @@ const Page = () => {
         toast.success("Logged In Successfully");
         router.push("/");
       } else {
+        toast.error("Please Enter Valid Details");
         throw new Error(response.data.error);
       }
     } catch (error) {
       setLoading(false);
-      toast.error(
-        "Something Went Wrong: " +
-          (error.response?.data?.error || error.message)
-      );
+      toast.error("Please Enter Valid Details");
       console.error("Error in Frontend:", error);
     }
   };
