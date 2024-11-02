@@ -1,7 +1,10 @@
-"./style.css";
+import "./style.css";
 
 const Loader = () => {
-  return <span className="loader"></span>;
+  return;
+  <div className="flex justify-center items-center h-screen">
+    <span className="loader"></span>
+  </div>;
 };
 
 export default Loader;
