@@ -16,7 +16,7 @@ export async function GET(request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Ensure secure flag is used in production
       expires: new Date(0), // Expire the cookie immediately
-      path: "/login", // Ensure path matches where the cookie was set
+      path: "/", // Ensure path matches where the cookie was set
     });
 
     return response;
