@@ -11,13 +11,12 @@ export async function GET(request) {
       message: "Logout Successfully",
       success: true,
     });
-
     // Clear the token cookie by setting it to expire
     response.cookies.set("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Ensure secure flag is used in production
       expires: new Date(0), // Expire the cookie immediately
-      path: "/", // Ensure path matches where the cookie was set
+      path: "/login", // Ensure path matches where the cookie was set
     });
 
     return response;
