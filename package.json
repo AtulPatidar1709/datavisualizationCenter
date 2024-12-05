@@ -17,7 +17,7 @@
     "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.1",
+    "mongoose": "^8.8.3",
     "next": "14.2.15",
     "nodemailer": "^6.9.15",
     "papaparse": "^5.4.1",
